@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes ,Navigate} from "react-router";
 import Body from "./components/Body";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
@@ -11,25 +11,81 @@ import ConnectionsRequests from "./components/ConnectionsRequests";
 import ManagePassword from "./components/ManagePassword";
 import Chat from "./components/Chat";
 
+const isAuthenticated = () => {
+  return appStore.getState().user !== null;
+};
+
+const ProtectedRoute = ({ children }) => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
 const app = () => {
   return (
     <>
-      <Provider store={appStore}>
-        <BrowserRouter basename="/">
-          <Routes>
-            <Route path="/" element={<Body />}>
-              <Route path='/login' element={<Login />} />
-              <Route path='/profile' element={<Profile />} />
-              <Route path='/feed' element={<Feed />} />
-              <Route path='/connections' element={<Connections />} />
-              <Route path='/connections-requests' element={<ConnectionsRequests/>} />
-              <Route path='/password' element={<ManagePassword/>} />
-              <Route path='/chat/:targetUserId' element={<Chat/>} />
-              <Route path='/error-page' element={<ErrorPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
+       <Provider store={appStore}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route index element={<Navigate to="/login" replace />} />
+
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/feed"
+              element={
+                <ProtectedRoute>
+                  <Feed />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/connections"
+              element={
+                <ProtectedRoute>
+                  <Connections />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/connections-requests"
+              element={
+                <ProtectedRoute>
+                  <ConnectionsRequests />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/password"
+              element={
+                <ProtectedRoute>
+                  <ManagePassword />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/chat/:targetUserId"
+              element={
+                <ProtectedRoute>
+                  <Chat />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/error-page" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
     </>
   )
 }

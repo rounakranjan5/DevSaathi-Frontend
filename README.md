@@ -15,7 +15,7 @@ A modern React-based frontend for DevSaathi, a developer connection platform. Th
 ## 🛠️ Tech Stack
 
 - **ReactJS**: UI library for building interactive interfaces
-- **React Router DOM**: Client-side routing
+- **Redux Toolkit** : State Management
 - **DaisyUI**: UI components built on Tailwind CSS
 - **Tailwind CSS**: Utility-first CSS framework
 - **CSS**: Custom styles
