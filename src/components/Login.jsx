@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router';
 import { BASE_URL } from '../utils/constants';
@@ -19,6 +19,9 @@ const Login = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const user = useSelector((store) => store.user)
+
 
     const validateLogin = async () => {
         setErrMsg("")
@@ -143,83 +146,88 @@ const Login = () => {
                         </div>
                     </div>
 
-                    <div className="lg:pl-8 animate-fade-in animation-delay-1000">
-                        <div className="w-full max-w-md mx-auto lg:mx-0">
-                            <div className="card bg-white dark:bg-base-100 shadow-2xl border border-slate-300 dark:border-base-300 backdrop-blur-sm hover:shadow-3xl transition-all duration-500 hover:scale-105 relative overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-secondary/8 opacity-30"></div>
-                                <div className="absolute -top-10 -right-10 w-20 h-20 bg-primary/15 rounded-full blur-xl animate-pulse"></div>
-                                <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-secondary/15 rounded-full blur-xl animate-pulse animation-delay-1000"></div>
 
-                                <div className="card-body p-6 relative z-10">
-                                    <div className="text-center mb-4">
-                                        <h2 className="text-2xl font-bold mb-1 bg-gradient-to-r from-teal-600 via-blue-600 to-purple-600 dark:from-emerald-400 dark:via-cyan-500 dark:to-blue-500 bg-clip-text text-transparent">
-                                            {isSignUpForm ? "Create Account" : "Welcome Back"}
-                                        </h2>
-                                        <p className="text-base-content/70 text-sm">
-                                            {isSignUpForm ? "Join the developer community 🚀" : "Sign in to continue your journey 👋"}
-                                        </p>
-                                    </div>
+                    {
+                        !user && (
+                            <div className="lg:pl-8 animate-fade-in animation-delay-1000">
+                                <div className="w-full max-w-md mx-auto lg:mx-0">
+                                    <div className="card bg-white dark:bg-base-100 shadow-2xl border border-slate-300 dark:border-base-300 backdrop-blur-sm hover:shadow-3xl transition-all duration-500 hover:scale-105 relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-secondary/8 opacity-30"></div>
+                                        <div className="absolute -top-10 -right-10 w-20 h-20 bg-primary/15 rounded-full blur-xl animate-pulse"></div>
+                                        <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-secondary/15 rounded-full blur-xl animate-pulse animation-delay-1000"></div>
 
-                                    <div className="space-y-3">
-                                        {isSignUpForm && (
-                                            <>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    <input type="text" className="input input-bordered input-sm focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="👤 First Name" ref={firstName} />
-                                                    <input type="text" className="input input-bordered input-sm focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="👤 Last Name" ref={lastName} />
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-2">
-                                                    <input type="number" className="input input-bordered input-sm focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="🎂 Age" ref={age} />
-                                                    <select className="select select-bordered select-sm focus:select-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" ref={gender}>
-                                                        <option disabled selected>⚧️ Gender</option>
-                                                        <option>male</option>
-                                                        <option>female</option>
-                                                        <option>others</option>
-                                                    </select>
-                                                </div>
-                                            </>
-                                        )}
-
-                                        <div className="relative">
-                                            <input type="email" className="input input-bordered input-sm w-full focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="📧 Email address" ref={email} />
-                                        </div>
-                                        <div className="relative">
-                                            <input type="password" className="input input-bordered input-sm w-full focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="🔒 Password" ref={password} />
-                                        </div>
-
-                                        {errMsg && (
-                                            <div className="alert alert-error alert-sm">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                <span className="text-sm">{errMsg}</span>
+                                        <div className="card-body p-6 relative z-10">
+                                            <div className="text-center mb-4">
+                                                <h2 className="text-2xl font-bold mb-1 bg-gradient-to-r from-teal-600 via-blue-600 to-purple-600 dark:from-emerald-400 dark:via-cyan-500 dark:to-blue-500 bg-clip-text text-transparent">
+                                                    {isSignUpForm ? "Create Account" : "Welcome Back"}
+                                                </h2>
+                                                <p className="text-base-content/70 text-sm">
+                                                    {isSignUpForm ? "Join the developer community 🚀" : "Sign in to continue your journey 👋"}
+                                                </p>
                                             </div>
-                                        )}
 
-                                        <button
-                                            className="btn bg-gradient-to-r from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus btn-sm w-full mt-4 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-none"
-                                            onClick={isSignUpForm ? validateSignup : validateLogin}
-                                        >
-                                            <span className="flex items-center justify-center gap-2 ">
-                                                {isSignUpForm ? "🎉 Create Account" : "🚀 Sign In"}
-                                            </span>
-                                        </button>
+                                            <div className="space-y-3">
+                                                {isSignUpForm && (
+                                                    <>
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <input type="text" className="input input-bordered input-sm focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="👤 First Name" ref={firstName} />
+                                                            <input type="text" className="input input-bordered input-sm focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="👤 Last Name" ref={lastName} />
+                                                        </div>
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <input type="number" className="input input-bordered input-sm focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="🎂 Age" ref={age} />
+                                                            <select className="select select-bordered select-sm focus:select-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" ref={gender}>
+                                                                <option disabled selected>⚧️ Gender</option>
+                                                                <option>male</option>
+                                                                <option>female</option>
+                                                                <option>others</option>
+                                                            </select>
+                                                        </div>
+                                                    </>
+                                                )}
 
-                                        <div className="text-center mt-3">
-                                            <p className="text-base-content/70 text-sm">
-                                                {isSignUpForm ? "Already have an account? " : "Don't have an account? "}
+                                                <div className="relative">
+                                                    <input type="email" className="input input-bordered input-sm w-full focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="📧 Email address" ref={email} />
+                                                </div>
+                                                <div className="relative">
+                                                    <input type="password" className="input input-bordered input-sm w-full focus:input-primary focus:scale-105 transition-all duration-300 bg-base-100 backdrop-blur-sm" placeholder="🔒 Password" ref={password} />
+                                                </div>
+
+                                                {errMsg && (
+                                                    <div className="alert alert-error alert-sm">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        <span className="text-sm">{errMsg}</span>
+                                                    </div>
+                                                )}
+
                                                 <button
-                                                    className="link bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 dark:from-orange-400 dark:via-pink-500 dark:to-red-500 bg-clip-text text-transparent font-semibold text-sm hover:from-red-600 hover:via-pink-600 hover:to-purple-600 dark:hover:from-pink-400 dark:hover:via-red-400 dark:hover:to-orange-400 transition-all duration-300 hover:scale-110"
-                                                    onClick={() => setIsSignUpForm(!isSignUpForm)}
+                                                    className="btn bg-gradient-to-r from-primary to-secondary hover:from-primary-focus hover:to-secondary-focus btn-sm w-full mt-4 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-none"
+                                                    onClick={isSignUpForm ? validateSignup : validateLogin}
                                                 >
-                                                    {isSignUpForm ? "Sign in ✨" : "Sign up ✨"}
+                                                    <span className="flex items-center justify-center gap-2 ">
+                                                        {isSignUpForm ? "🎉 Create Account" : "🚀 Sign In"}
+                                                    </span>
                                                 </button>
-                                            </p>
+
+                                                <div className="text-center mt-3">
+                                                    <p className="text-base-content/70 text-sm">
+                                                        {isSignUpForm ? "Already have an account? " : "Don't have an account? "}
+                                                        <button
+                                                            className="link bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 dark:from-orange-400 dark:via-pink-500 dark:to-red-500 bg-clip-text text-transparent font-semibold text-sm hover:from-red-600 hover:via-pink-600 hover:to-purple-600 dark:hover:from-pink-400 dark:hover:via-red-400 dark:hover:to-orange-400 transition-all duration-300 hover:scale-110"
+                                                            onClick={() => setIsSignUpForm(!isSignUpForm)}
+                                                        >
+                                                            {isSignUpForm ? "Sign in ✨" : "Sign up ✨"}
+                                                        </button>
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                    }
                 </div>
             </div>
         </div>
