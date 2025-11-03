@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes ,Navigate} from "react-router";
+import { BrowserRouter, Routes ,Navigate, Route} from "react-router";
 import Body from "./components/Body";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
@@ -10,6 +10,10 @@ import Connections from "./components/Connections";
 import ConnectionsRequests from "./components/ConnectionsRequests";
 import ManagePassword from "./components/ManagePassword";
 import Chat from "./components/Chat";
+import AboutUs from "./components/AboutUs";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import Contact from "./components/ContactUs";
+import TermsAndConditions from "./components/TermsCond";
 
 const isAuthenticated = () => {
   return appStore.getState().user !== null;
@@ -29,6 +33,7 @@ const app = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Body />}>
+            
             <Route index element={<Navigate to="/login" replace />} />
 
             <Route path="/login" element={<Login />} />
@@ -81,7 +86,15 @@ const app = () => {
               }
             />
 
-            <Route path="/error-page" element={<ErrorPage />} />
+            <Route path="/about" element={<AboutUs/>} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+            <Route path="/contact" element={<Contact/>}/>
+            <Route path="/terms-conditions" element={<TermsAndConditions/>}/>
+
+            <Route path="*" element={<ErrorPage />} />
+
+
+          
           </Route>
         </Routes>
       </BrowserRouter>
