@@ -1,16 +1,30 @@
-# React + Vite
+# DevSaathi 🤝 Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based frontend for DevSaathi, a developer connection platform. This app enables developers to discover, connect, and chat with other professionals.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication**: Register, login, and manage sessions
+- **Profile Management**: Edit profile, add skills, upload profile picture
+- **Developer Feed**: Browse and search developers by skills
+- **Connection Requests**: Send, receive, and review connection requests
+- **Chat System**: Real-time one-on-one messaging with Socket.IO
+- **Weekly Email Notifications**: Users receive a summary of pending requests (handled by backend)
+- **Responsive UI**: Works on desktop, tablet, and mobile
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **ReactJS**: UI library for building interactive interfaces
+- **React Router DOM**: Client-side routing
+- **DaisyUI**: UI components built on Tailwind CSS
+- **Tailwind CSS**: Utility-first CSS framework
+- **CSS**: Custom styles
+- **JavaScript**: Application logic
+- **Socket.IO Client**: Real-time communication with backend
 
-## Expanding the ESLint configuration
+## 🔗 Backend
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [DevSaathi Backend](https://github.com/rounakranjan5/DevSaathi-Backend)
+
+
+**DevSaathi** - Connecting Developers, Building Communities 🤝

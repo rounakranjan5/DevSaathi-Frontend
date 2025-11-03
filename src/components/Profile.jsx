@@ -16,6 +16,9 @@ const Profile = () => {
   const [photoUrl, setPhotoUrl] = useState(user?.photoUrl)
   const [about, setAbout] = useState(user?.about)
 
+  const [skills,setSkills]=useState(user?.skills || [])
+  const [skillsInput, setSkillsInput] = useState(user?.skills ? user.skills.join(", ") : "")
+
   const [showToast, setShowToast] = useState(false)
 
 
@@ -32,7 +35,8 @@ const Profile = () => {
         age,
         gender,
         photoUrl,
-        about
+        about,
+        skills
       }, { withCredentials: true })
       // console.log(resp.data.data);
       // console.log(resp);
@@ -59,6 +63,8 @@ const Profile = () => {
       setGender(user?.gender)
       setPhotoUrl(user?.photoUrl)
       setAbout(user?.about)
+      setSkills(user?.skills || [])
+      setSkillsInput(user?.skills ? user.skills.join(", ") : "")
     }
   }, [user])
 
@@ -146,6 +152,37 @@ const Profile = () => {
                     </select>
                   </div>
 
+                  <div className='form-control'>
+                    <label className="label">
+                      <span className="label-text font-medium">Skills</span>
+                    </label>
+                    <input 
+                      type='text'  
+                      className="input input-bordered w-full" 
+                      placeholder="React, Node.js, JavaScript, Python..."
+                      value={skillsInput}
+                      onChange={(e) => {
+                        setSkillsInput(e.target.value)
+                        const skillsArray = e.target.value.split(",").map(skill => skill.trim()).filter(skill => skill.length > 0)
+                        setSkills(skillsArray)
+                      }}
+                    />
+                    <p className="text-sm text-base-content/60 mt-1">Separate multiple skills with commas</p>
+                    
+                    {skills.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {skills.map((skill, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary border border-primary/30"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text font-medium">About</span>
@@ -184,7 +221,7 @@ const Profile = () => {
             <h3 className="text-xl font-bold mb-4 text-base-content text-center">Profile Preview</h3>
             {user && (
               <UserCard 
-                user={{ firstName, lastName, age, gender, photoUrl, about }} 
+                user={{ firstName, lastName, age, gender, photoUrl, about,skills }} 
                 showBtns={false} 
                 showChatbtnInProfile={false} 
               />
